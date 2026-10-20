@@ -315,13 +315,13 @@ h2::after {
 
 /* reputation animation: no controls, runs on its own */
 .repfig { margin: 20px 0 0; border: 1.5px solid var(--gold); padding: 24px; --cycle: 14s; }
-.track { position: relative; height: 14px; border-radius: 7px; background: linear-gradient(90deg, #2f9b73 0 33.3%, #e0a030 33.3% 66.6%, #c9473d 66.6%); }
+.track { position: relative; height: 14px; border-radius: 7px; background: linear-gradient(90deg, #c9473d 0 33.3%, #e0a030 33.3% 66.6%, #2f9b73 66.6%); }
 .marker {
-  position: absolute; top: -9px; left: 2%; width: 0; height: 0;
+  position: absolute; top: -9px; left: 98%; width: 0; height: 0;
   border-inline: 9px solid transparent; border-top: 14px solid var(--paper);
   margin-left: -9px; animation: slide var(--cycle) ease-in-out infinite;
 }
-@keyframes slide { 0%, 6% { left: 2%; } 90%, 100% { left: 98%; } }
+@keyframes slide { 0%, 6% { left: 98%; } 90%, 100% { left: 2%; } }
 .states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
 .st { padding: 12px 14px; border: 1.5px solid rgba(184,150,78,.5); opacity: .45; animation: lit var(--cycle) infinite; }
 .st strong { display: block; font: 800 1.05rem var(--display); }
