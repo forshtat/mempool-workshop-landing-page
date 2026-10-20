@@ -152,17 +152,21 @@
 
     <h3 class="on-ink">How an entity loses its standing</h3>
     <p class="sub on-ink">A node counts how often it has seen an entity's transactions, and how many of them were included in a block. When the gap grows, the entity is limited, then removed.</p>
-    <figure class="repfig" aria-label="Animation: an entity's reputation declines from active to throttled to banned">
-      <div class="track"><span class="marker"></span></div>
-      <div class="states">
-        <div class="st s3"><strong>BANNED</strong><span>No new transactions. Pending ones that reference it are removed.</span></div>
-        <div class="st s2"><strong>THROTTLED</strong><span>At most 4 pending, 4 per block built, and 10 blocks in the mempool.</span></div>
-        <div class="st s1"><strong>ACTIVE</strong><span>Transactions are admitted. A staked entity has no cap on pending transactions.</span></div>
+    <figure class="repfig" aria-label="Animation: an entity's transactions fail to get included, and its reputation steps down from active to throttled to banned">
+      <div class="anim">
+        <div class="track"><span class="marker"></span></div>
+        <div class="states">
+          <div class="st s3"><strong>BANNED</strong><span>No new transactions. Pending ones that reference it are removed.</span></div>
+          <div class="st s2"><strong>THROTTLED</strong><span>At most 4 pending, 4 per block built, and 10 blocks in the mempool.</span></div>
+          <div class="st s1"><strong>ACTIVE</strong><span>Transactions are admitted. A staked entity has no cap on pending transactions.</span></div>
+        </div>
+        <div class="chips" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </div>
-      <div class="chips" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-      </div>
-      <figcaption>Each square is a transaction the entity sponsored. Transactions that never get included push it down the track.</figcaption>
+      <figcaption>
+        <span class="lg seen"></span>Seen by the node
+        <span class="lg lost"></span>Never included in a block
+        <span class="lg-note">Every missed inclusion moves the entity one step left.</span>
+      </figcaption>
     </figure>
     <p class="fine on-ink">The thresholds are in ERC-8421: <span class="mono">THROTTLING_SLACK</span> 10 and <span class="mono">BAN_SLACK</span> 50, applied to seen divided by 10 minus included. Counters decay by 23/24 every hour, so four days of inactivity is a practical reset.</p>
   </div>

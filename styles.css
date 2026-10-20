@@ -313,36 +313,54 @@ h2::after {
 @media (max-width: 900px) { .uses { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .uses { grid-template-columns: 1fr; } }
 
-/* reputation animation: no controls, runs on its own */
-.repfig { margin: 20px 0 0; border: 1.5px solid var(--gold); padding: 24px; --cycle: 14s; }
-.track { position: relative; height: 14px; border-radius: 7px; background: linear-gradient(90deg, #c9473d 0 33.3%, #e0a030 33.3% 66.6%, #2f9b73 66.6%); }
-.marker {
-  position: absolute; top: -9px; left: 98%; width: 0; height: 0;
-  border-inline: 9px solid transparent; border-top: 14px solid var(--paper);
-  margin-left: -9px; animation: slide var(--cycle) ease-in-out infinite;
-}
-@keyframes slide { 0%, 6% { left: 98%; } 90%, 100% { left: 2%; } }
+/* reputation animation: one 20s timeline drives marker, cards and squares */
+.repfig { margin: 20px 0 0; border: 1.5px solid var(--gold); padding: 24px; }
+.anim { animation: cycle 20s linear infinite; }
+.track { position: relative; height: 14px; border-radius: 7px; background: linear-gradient(90deg, #c9473d 0 38.3%, #e0a030 38.3% 69.6%, #2f9b73 69.6%); }
+.marker { position: absolute; top: -9px; left: 97%; width: 0; height: 0; border-inline: 9px solid transparent; border-top: 14px solid var(--paper); margin-left: -9px; animation: slide 20s linear infinite; }
 .states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
-.st { padding: 12px 14px; border: 1.5px solid rgba(184,150,78,.5); opacity: .45; animation: lit var(--cycle) infinite; }
+.st { padding: 12px 14px; border: 1.5px solid rgba(184,150,78,.5); opacity: .35; }
 .st strong { display: block; font: 800 1.05rem var(--display); }
 .st span { font-size: .95rem; color: #e8e4ff; }
 .s1 strong { color: #7fe0b5; } .s2 strong { color: #ffc46b; } .s3 strong { color: #ff8a80; }
-.s1 { animation-name: lit1; } .s2 { animation-name: lit2; } .s3 { animation-name: lit3; }
-@keyframes lit1 { 0%, 30% { opacity: 1; border-color: #7fe0b5; } 36%, 100% { opacity: .35; border-color: rgba(184,150,78,.5); } }
-@keyframes lit2 { 0%, 30% { opacity: .35; } 36%, 62% { opacity: 1; border-color: #ffc46b; } 68%, 100% { opacity: .35; border-color: rgba(184,150,78,.5); } }
-@keyframes lit3 { 0%, 62% { opacity: .35; } 68%, 94% { opacity: 1; border-color: #ff8a80; } 100% { opacity: .35; } }
+.s1 { animation: lit1 20s linear infinite; } .s2 { animation: lit2 20s linear infinite; } .s3 { animation: lit3 20s linear infinite; }
 .chips { display: flex; gap: 8px; margin-top: 18px; }
-.chips span { flex: 1; height: 22px; background: #2f9b73; border-radius: 3px; animation: fail var(--cycle) infinite; }
-.chips span:nth-child(n+5) { animation-name: fail2; }
-.chips span:nth-child(n+9) { animation-name: fail3; }
-@keyframes fail  { 0%, 24% { background: #2f9b73; } 30%, 100% { background: #c9473d; } }
-@keyframes fail2 { 0%, 44% { background: #2f9b73; } 50%, 100% { background: #c9473d; } }
-@keyframes fail3 { 0%, 70% { background: #2f9b73; } 76%, 100% { background: #c9473d; } }
-.chips span:nth-child(n+10) { opacity: 1; animation-name: fail3, gone; animation-duration: var(--cycle); animation-iteration-count: infinite; }
-@keyframes gone { 0%, 88% { transform: none; opacity: 1; } 95%, 100% { transform: scaleY(.15); opacity: .35; } }
-.repfig figcaption { margin-top: 12px; font-size: .95rem; color: #c8c4ee; }
+.chips span { flex: 1; height: 22px; border-radius: 3px; border: 1.5px dashed rgba(200,196,238,.45); background: transparent; }
+.repfig figcaption { margin-top: 16px; font-size: .95rem; color: #c8c4ee; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.lg { display: inline-block; width: 16px; height: 16px; border-radius: 3px; }
+.lg.seen { background: #c8c4ee; } .lg.lost { background: #c9473d; margin-left: 12px; }
+.lg-note { flex-basis: 100%; }
+@keyframes cycle { 0% { opacity: 0; } 2% { opacity: 1; } 94% { opacity: 1; } 97% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes slide { 0% { left: 97%; } 13.1% { left: 97%; animation-timing-function: ease-in-out; } 14.5% { left: 89.17%; } 19.6% { left: 89.17%; animation-timing-function: ease-in-out; } 21% { left: 81.34%; } 26.1% { left: 81.34%; animation-timing-function: ease-in-out; } 27.5% { left: 73.51%; } 32.6% { left: 73.51%; animation-timing-function: ease-in-out; } 34% { left: 65.68%; } 39.1% { left: 65.68%; animation-timing-function: ease-in-out; } 40.5% { left: 57.85%; } 45.6% { left: 57.85%; animation-timing-function: ease-in-out; } 47% { left: 50.02%; } 52.1% { left: 50.02%; animation-timing-function: ease-in-out; } 53.5% { left: 42.19%; } 58.6% { left: 42.19%; animation-timing-function: ease-in-out; } 60% { left: 34.36%; } 65.1% { left: 34.36%; animation-timing-function: ease-in-out; } 66.5% { left: 26.53%; } 71.6% { left: 26.53%; animation-timing-function: ease-in-out; } 73% { left: 18.7%; } 78.1% { left: 18.7%; animation-timing-function: ease-in-out; } 79.5% { left: 10.87%; } 84.6% { left: 10.87%; animation-timing-function: ease-in-out; } 86% { left: 3.04%; } 96.9% { left: 3.04%; } 97% { left: 97%; } 100% { left: 97%; } }
+@keyframes lit1 { 0% { opacity: .35; } 2% { opacity: 1; border-color: #7fe0b5; } 33.7% { opacity: 1; border-color: #7fe0b5; } 34% { opacity: .35; border-color: rgba(184,150,78,.5); } 100% { opacity: .35; border-color: rgba(184,150,78,.5); } }
+@keyframes lit2 { 0%, 33.7% { opacity: .35; border-color: rgba(184,150,78,.5); } 34% { opacity: 1; border-color: #ffc46b; } 59.7% { opacity: 1; border-color: #ffc46b; } 60%, 100% { opacity: .35; border-color: rgba(184,150,78,.5); } }
+@keyframes lit3 { 0%, 59.7% { opacity: .35; border-color: rgba(184,150,78,.5); } 60% { opacity: 1; border-color: #ff8a80; } 96% { opacity: 1; border-color: #ff8a80; } 97%, 100% { opacity: .35; border-color: rgba(184,150,78,.5); } }
+.chips span:nth-child(1) { animation: sq0 20s linear infinite; }
+@keyframes sq0 { 0%, 9.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 10.3%, 14.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 14.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(2) { animation: sq1 20s linear infinite; }
+@keyframes sq1 { 0%, 16.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 16.8%, 20.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 21%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(3) { animation: sq2 20s linear infinite; }
+@keyframes sq2 { 0%, 22.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 23.3%, 27.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 27.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(4) { animation: sq3 20s linear infinite; }
+@keyframes sq3 { 0%, 29.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 29.8%, 33.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 34%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(5) { animation: sq4 20s linear infinite; }
+@keyframes sq4 { 0%, 35.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 36.3%, 40.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 40.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(6) { animation: sq5 20s linear infinite; }
+@keyframes sq5 { 0%, 42.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 42.8%, 46.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 47%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(7) { animation: sq6 20s linear infinite; }
+@keyframes sq6 { 0%, 48.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 49.3%, 53.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 53.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(8) { animation: sq7 20s linear infinite; }
+@keyframes sq7 { 0%, 55.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 55.8%, 59.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 60%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(9) { animation: sq8 20s linear infinite; }
+@keyframes sq8 { 0%, 61.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 62.3%, 66.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 66.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(10) { animation: sq9 20s linear infinite; }
+@keyframes sq9 { 0%, 68.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 68.8%, 72.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 73%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(11) { animation: sq10 20s linear infinite; }
+@keyframes sq10 { 0%, 74.9% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 75.3%, 79.1% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 79.5%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
+.chips span:nth-child(12) { animation: sq11 20s linear infinite; }
+@keyframes sq11 { 0%, 81.4% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } 81.8%, 85.6% { background: #c8c4ee; border: 1.5px solid #c8c4ee; } 86%, 96.9% { background: #c9473d; border: 1.5px solid #c9473d; } 97%, 100% { background: transparent; border: 1.5px dashed rgba(200,196,238,.45); } }
 @media (max-width: 720px) { .states { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .marker { left: 50%; animation: none !important; } .st { opacity: 1; animation: none !important; } .chips span { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .anim, .marker, .st, .chips span { animation: none !important; } .anim { opacity: 1; } .marker { left: 50%; } .st { opacity: 1; } .chips span:nth-child(-n+6) { background: #c9473d; border-color: #c9473d; } .chips span:nth-child(n+7) { background: #c8c4ee; border-color: #c8c4ee; } }
 
 /* frame boxes have a fixed width per type, so self_verify and only_verify match in every row */
 .frame { flex: none; width: 124px; }
