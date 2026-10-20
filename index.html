@@ -22,9 +22,9 @@
   <nav aria-label="Sections">
     <a href="#strict">Why strict</a>
     <a href="#unlock">What changes</a>
-    <a href="#vs4337">vs ERC-4337</a>
+    <a href="#vs4337">ERC-4337</a>
     <a href="#architecture">Architecture</a>
-    <a href="#skandha">Skandha</a>
+    <a href="#sidecar">Sidecar</a>
     <a href="#build">Build</a>
   </nav>
 </header>
@@ -34,7 +34,6 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-title">
-    <p class="kicker">Devcon Mumbai &middot; Alex Forshtat, Ethereum Foundation</p>
     <h1>Alternative mempools for Frame Transactions</h1>
     <p class="lede">EIP-8141's public mempool says no to almost everything that needs real validation logic. ERC-8421 lets nodes say yes, by pricing abuse with stake and reputation instead of banning whole features.</p>
     <p class="hero-links"><a class="btn" href="#matrix">See what each mempool admits</a><a class="btn ghost" href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">Read the discussion</a></p>
@@ -104,7 +103,6 @@
       <div>
         <p>A Frame Transaction replaces the hard-coded signature check with EVM code. That code runs in the <em>validation prefix</em>, and a node must run it before it may relay the transaction. Nobody pays the node for that work.</p>
         <p>If the prefix reads state that anyone can change, one cheap write can invalidate thousands of pending transactions at once. That is the <strong>mass invalidation attack</strong>, and it is what every rule below exists to stop.</p>
-        <p>EIP-8141 borrows from ERC-7562 but <strong>removes staking and reputation entirely</strong>. Anything ERC-7562 would admit only for a staked or reputable party is rejected in the public mempool.</p>
       </div>
       <div>
         <table class="spec">
@@ -122,7 +120,12 @@
 
     <h3>Only four prefix shapes get through</h3>
     <p class="sub">Each box is a frame. Everything after the prefix is outside mempool validation.</p>
-    <div class="prefixes" id="prefixes" role="list"></div>
+    <div class="prefixes" role="list">
+      <div class="prefix" role="listitem"><h4>Self relay</h4><div class="frames"><span class="frame ">self_verify</span><span class="frame tail">user_op&hellip;</span></div></div>
+      <div class="prefix" role="listitem"><h4>Self relay, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">self_verify</span><span class="frame tail">user_op&hellip;</span></div></div>
+      <div class="prefix" role="listitem"><h4>Canonical paymaster</h4><div class="frames"><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">user_op&hellip;</span></div></div>
+      <div class="prefix" role="listitem"><h4>Canonical paymaster, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">user_op&hellip;</span></div></div>
+    </div>
   </div>
 </section>
 
@@ -147,18 +150,21 @@
       </article>
     </div>
 
-    <h3 class="on-ink">Reputation, in your hands</h3>
-    <p class="sub on-ink">Move the sliders. The thresholds are the ones in ERC-8421: <span class="mono">THROTTLING_SLACK</span> 10, <span class="mono">BAN_SLACK</span> 50, denominator 10.</p>
-    <div class="rep">
-      <div class="rep-controls">
-        <label>Times seen <output id="seenOut">400</output>
-          <input type="range" id="seen" min="0" max="2000" step="10" value="400"></label>
-        <label>Times included <output id="incOut">10</output>
-          <input type="range" id="inc" min="0" max="500" step="1" value="10"></label>
+    <h3 class="on-ink">How an entity loses its standing</h3>
+    <p class="sub on-ink">A node counts how often it has seen an entity's transactions, and how many of them were included in a block. When the gap grows, the entity is limited, then removed.</p>
+    <figure class="repfig" aria-label="Animation: an entity's reputation declines from active to throttled to banned">
+      <div class="track"><span class="marker"></span></div>
+      <div class="states">
+        <div class="st s1"><strong>ACTIVE</strong><span>Transactions are admitted. A staked entity has no cap on pending transactions.</span></div>
+        <div class="st s2"><strong>THROTTLED</strong><span>At most 4 pending, 4 per block built, and 10 blocks in the mempool.</span></div>
+        <div class="st s3"><strong>BANNED</strong><span>No new transactions. Pending ones that reference it are removed.</span></div>
       </div>
-      <div class="rep-result" id="repResult" aria-live="polite"></div>
-    </div>
-    <p class="fine on-ink">Counters decay by 23/24 every hour, so four days of inactivity is a practical reset. An <span class="mono">ACTIVE</span> staked entity has no cap on pending transactions.</p>
+      <div class="chips" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <figcaption>Each square is a transaction the entity sponsored. Transactions that never get included push it down the track.</figcaption>
+    </figure>
+    <p class="fine on-ink">The thresholds are in ERC-8421: <span class="mono">THROTTLING_SLACK</span> 10 and <span class="mono">BAN_SLACK</span> 50, applied to seen divided by 10 minus included. Counters decay by 23/24 every hour, so four days of inactivity is a practical reset.</p>
   </div>
 </section>
 
@@ -202,7 +208,7 @@
 <!-- VS 4337 -->
 <section class="sect paper" id="vs4337">
   <div class="wrap">
-    <h2>If you know ERC-4337, you know most of this</h2>
+    <h2>Backwards compatibility with the ERC-4337 ecosystem</h2>
     <p class="lead">ERC-8421 keeps what ERC-7562 made possible. The contract logic carries over. The interfaces around it change.</p>
     <div class="scroll">
     <table class="cmp">
@@ -254,13 +260,13 @@
   </div>
 </section>
 
-<!-- SKANDHA -->
-<section class="sect paper" id="skandha">
+<!-- SIDECAR -->
+<section class="sect paper" id="sidecar">
   <div class="wrap">
-    <h2>Skandha: a working alternative mempool node</h2>
+    <h2>A mempool sidecar you can run today</h2>
     <div class="cols2">
       <div>
-        <p>Skandha is a TypeScript bundler and p2p sidecar for EIP-8141, forked from Etherspot's ERC-4337 bundler. It exposes <span class="mono">eth_sendFrameTransaction</span>, validates and simulates against an execution client, relays on-chain, and gossips between nodes over libp2p.</p>
+        <p>The mempool sidecar is a TypeScript node for EIP-8141. It exposes <span class="mono">eth_sendFrameTransaction</span>, validates and simulates transactions against an execution client, relays them on-chain, and gossips them to other sidecars over libp2p.</p>
         <p>There is no EntryPoint and no <span class="mono">eth_sendUserOperation</span>. It needs an execution client that implements EIP-8141. Today that is the <span class="mono">eip8141-tracer</span> branch of ethrex.</p>
         <p class="hero-links"><a class="btn" href="https://altmempoolexplorer.forshtat.com/">Open the live devnet explorer</a><a class="btn ghost dark" href="https://github.com/forshtat/framepool">Source on GitHub</a></p>
       </div>
@@ -288,7 +294,7 @@
       <li><a href="https://eips.ethereum.org/EIPS/eip-8421"><strong>ERC-8421</strong><span>The specification</span></a></li>
       <li><a href="https://eips.ethereum.org/EIPS/eip-8141"><strong>EIP-8141</strong><span>Frame Transactions and the canonical mempool</span></a></li>
       <li><a href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800"><strong>Ethereum Magicians</strong><span>Join the discussion</span></a></li>
-      <li><a href="https://github.com/forshtat/framepool"><strong>Skandha</strong><span>Run a node against the devnet</span></a></li>
+      <li><a href="https://github.com/forshtat/framepool"><strong>Mempool sidecar</strong><span>Run a node against the devnet</span></a></li>
       <li><a href="https://altmempoolexplorer.forshtat.com/"><strong>Devnet explorer</strong><span>Live mempool, admissions, peers</span></a></li>
       <li class="soon"><span><strong>Documentation, starter repository, coding-agent skill</strong><span>Coming soon</span></span></li>
     </ul>
@@ -304,6 +310,5 @@
   <p>ERC-8421 is a draft. Rules and constants on this page follow the draft and may change. Gas figures in the admission desk are illustrative.</p>
 </footer>
 
-<script src="main.js"></script>
 </body>
 </html>
