@@ -269,7 +269,7 @@ h2::after {
 .links a:hover { border-color: var(--marigold); }
 
 /* ornamental frame: indigo band with gold rules, marigold diamonds and corner blossoms */
-.panel, .report {
+.panel, .report, .matrix-wrap {
   --frame: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2272%22 height=%2272%22 viewBox=%220 0 72 72%22%3E%3Cpath fill-rule=%22evenodd%22 fill=%22%231a1f8c%22 d=%22M0 0h72v72H0z M24 24v24h24V24z%22/%3E%3Crect x=%221%22 y=%221%22 width=%2270%22 height=%2270%22 fill=%22none%22 stroke=%22%23b8964e%22 stroke-width=%221.6%22/%3E%3Crect x=%2223%22 y=%2223%22 width=%2226%22 height=%2226%22 fill=%22none%22 stroke=%22%23b8964e%22 stroke-width=%221.6%22/%3E%3Cpolygon points=%2236,6 42,12 36,18 30,12%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2236%22 cy=%2212%22 r=%221.8%22 fill=%22%231a1f8c%22/%3E%3Cpolygon points=%2236,54 42,60 36,66 30,60%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2236%22 cy=%2260%22 r=%221.8%22 fill=%22%231a1f8c%22/%3E%3Cpolygon points=%2212,30 18,36 12,42 6,36%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2212%22 cy=%2236%22 r=%221.8%22 fill=%22%231a1f8c%22/%3E%3Cpolygon points=%2260,30 66,36 60,42 54,36%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2260%22 cy=%2236%22 r=%221.8%22 fill=%22%231a1f8c%22/%3E%3Ccircle cx=%2224%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2248%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2224%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2248%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2224%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2248%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2224%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2248%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%227%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%227%22 fill=%22none%22 stroke=%22%230e1146%22 stroke-width=%221%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%223%22 fill=%22%23e8702a%22/%3E%3Ccircle cx=%2212%22 cy=%227%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2217%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2217%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%227%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2212%22 r=%227%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2260%22 cy=%2212%22 r=%227%22 fill=%22none%22 stroke=%22%230e1146%22 stroke-width=%221%22/%3E%3Ccircle cx=%2260%22 cy=%2212%22 r=%223%22 fill=%22%23e8702a%22/%3E%3Ccircle cx=%2260%22 cy=%227%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2265%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2217%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2255%22 cy=%2212%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2260%22 r=%227%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2212%22 cy=%2260%22 r=%227%22 fill=%22none%22 stroke=%22%230e1146%22 stroke-width=%221%22/%3E%3Ccircle cx=%2212%22 cy=%2260%22 r=%223%22 fill=%22%23e8702a%22/%3E%3Ccircle cx=%2212%22 cy=%2255%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2217%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2212%22 cy=%2265%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%227%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%227%22 fill=%22%23f2a516%22/%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%227%22 fill=%22none%22 stroke=%22%230e1146%22 stroke-width=%221%22/%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%223%22 fill=%22%23e8702a%22/%3E%3Ccircle cx=%2260%22 cy=%2255%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2265%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2260%22 cy=%2265%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3Ccircle cx=%2255%22 cy=%2260%22 r=%221.6%22 fill=%22%23f1e7cf%22/%3E%3C/svg%3E");
   border: 18px solid transparent; border-image: var(--frame) 24 round; outline: 0;
 }
@@ -277,3 +277,27 @@ h2::after {
 .report { padding: 6px; }
 .tabs { border-bottom: 0; }
 .prefix, .rep, .tools, .uses { outline: 0; }
+
+/* hero is a single column now */
+.hero { grid-template-columns: 1fr; min-height: 0; }
+.hero-title { padding-block: clamp(48px, 8vw, 110px); padding-inline: max(16px, calc((100% - 1080px) / 2)); }
+.hero-title::after { display: none; }
+.hero .lede { max-width: 52ch; }
+
+/* matrix */
+.matrix-wrap { margin-top: 28px; padding: 6px; background: #fbf5e4; }
+.matrix { min-width: 820px; table-layout: fixed; }
+.matrix th, .matrix td { border: 0; border-top: 1px dotted #9d8c5c; padding: 16px 14px; font-size: 1rem; line-height: 1.45; vertical-align: top; }
+.matrix thead th { border-top: 0; border-bottom: 2px solid var(--ink); font: 700 1.05rem var(--display); }
+.matrix thead th small { display: block; font: 500 .85rem var(--body); color: #6a5f43; }
+.matrix tbody th { width: 21%; font: 700 1.05rem var(--display); }
+.matrix tbody th small { display: block; margin-top: 4px; font: 400 .88rem/1.35 var(--body); color: #6a5f43; }
+.matrix tbody tr:first-child th, .matrix tbody tr:first-child td { border-top: 0; }
+.v { display: block; width: fit-content; margin-bottom: 6px; padding: 1px 10px; border-radius: 4px; font: 800 .95rem var(--display); color: #fff; }
+.v.no { background: var(--bad); }
+.v.limited { background: #b86a10; }
+.v.good { background: var(--ok); }
+.v.plus { background: var(--ok); }
+.v.custom { background: var(--indigo); }
+.matrix .rule { margin: 6px 4px 0 0; }
+@media (max-width: 900px) { .hero-title { padding-inline: 20px; } }

@@ -37,33 +37,66 @@
     <p class="kicker">Devcon Mumbai &middot; Alex Forshtat, Ethereum Foundation</p>
     <h1>Alternative mempools for Frame Transactions</h1>
     <p class="lede">EIP-8141's public mempool says no to almost everything that needs real validation logic. ERC-8421 lets nodes say yes, by pricing abuse with stake and reputation instead of banning whole features.</p>
-    <p class="hero-links"><a class="btn" href="#desk">Try the admission desk</a><a class="btn ghost" href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">Read the discussion</a></p>
-  </div>
-
-  <div class="hero-desk" id="desk">
-    <h2 class="desk-title">The admission desk</h2>
-    <p class="desk-sub">Pick a transaction. See which mempool lets it in, and which rule decides.</p>
-
-    <div class="field" role="radiogroup" aria-label="Transaction type" id="scenarios"></div>
-
-    <div class="tabs" role="tablist" aria-label="Mempool">
-      <button role="tab" id="tab-canonical" aria-selected="true" data-mp="canonical">Canonical <small>EIP-8141</small></button>
-      <button role="tab" id="tab-standard" aria-selected="false" data-mp="standard">Standard alternative <small>ERC-8421</small></button>
-      <button role="tab" id="tab-custom" aria-selected="false" data-mp="custom">Your own <small>operator rules</small></button>
-    </div>
-
-    <div class="panel" role="tabpanel" aria-live="polite">
-      <div class="verdict" id="verdict"></div>
-      <label class="stake" id="stakeRow"><input type="checkbox" id="staked"> <span>The entity doing the heavy lifting has <strong>staked</strong> (at least <span class="mono">MIN_STAKE_VALUE</span>, one-day unstake delay)</span></label>
-      <ul class="checks" id="checks"></ul>
-      <p class="fine" id="note"></p>
-    </div>
+    <p class="hero-links"><a class="btn" href="#matrix">See what each mempool admits</a><a class="btn ghost" href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">Read the discussion</a></p>
   </div>
 </section>
 
 <div class="band" aria-hidden="true"></div>
 
+<!-- MATRIX -->
+<section class="sect paper" id="matrix">
+  <div class="wrap">
+    <h2>Which mempool admits what</h2>
+    <p class="lead">Four transactions the canonical rules struggle with, and how each mempool treats them.</p>
+    <div class="matrix-wrap">
+      <div class="scroll">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th scope="col">Use case</th>
+            <th scope="col">Canonical<small>EIP-8141</small></th>
+            <th scope="col">Standard alternative<small>ERC-8421</small></th>
+            <th scope="col">Your own<small>operator rules</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Privacy withdrawal<small>Proof check of about 350k gas, shared sender, keyed nonces</small></th>
+            <td><span class="v limited">Limited</span>100k gas cap is too low for a proof.</td>
+            <td><span class="v plus">Good, with stake</span>A staked sender gets 1M gas and no sender-wide pending cap. <span class="rule">BUDGET-010</span><span class="rule">LIFECYCLE-030</span></td>
+            <td><span class="v custom">Custom</span>Set your own gas limit.</td>
+          </tr>
+          <tr>
+            <th scope="row">Keystore wallet<small>Credentials live outside the sender account</small></th>
+            <td><span class="v no">Rejected</span>Storage outside the sender is third-party mutable state.</td>
+            <td><span class="v good">Good</span>Slots associated with the sender are readable. Deploying the account in the same transaction needs a staked factory. <span class="rule">STORAGE-021</span><span class="rule">STORAGE-022</span></td>
+            <td><span class="v custom">Custom</span>Trust a keystore contract you audited.</td>
+          </tr>
+          <tr>
+            <th scope="row">Post-quantum signature<small>Verified in plain EVM, about 700k gas</small></th>
+            <td><span class="v no">Rejected</span>Far above the 100k gas cap.</td>
+            <td><span class="v plus">Good, with stake</span>A staked sender gets 1M gas. <span class="rule">BUDGET-010</span></td>
+            <td><span class="v custom">Custom</span>Replace hot Solidity with a native binary.</td>
+          </tr>
+          <tr>
+            <th scope="row">Token paymaster<small>Pays gas, collects ERC-20 tokens</small></th>
+            <td><span class="v no">Rejected</span>No state-writing frame, third-party storage, and one pending transaction per paymaster.</td>
+            <td><span class="v plus">Good, with stake</span>A pre_verify frame collects the tokens. A staked paymaster keeps its own storage and has no pending cap. <span class="rule">PREFIX-110</span><span class="rule">STORAGE-031</span></td>
+            <td><span class="v custom">Custom</span>Allow-list a paymaster and set your own pending limit.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <p class="fine">Gas figures are illustrative. Stake means at least <span class="mono">MIN_STAKE_VALUE</span> with a one-day unstake delay.</p>
+  </div>
+</section>
+
+
+
 <!-- WHY STRICT -->
+<div class="band" aria-hidden="true"></div>
+
 <section class="sect paper" id="strict">
   <div class="wrap">
     <h2>The canonical mempool is strict on purpose</h2>
