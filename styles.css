@@ -41,7 +41,7 @@ em { font-style: italic; }
 .top nav { display: flex; gap: 20px; font: 500 .95rem var(--display); }
 .top nav a { text-decoration: none; opacity: .85; }
 .top nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-@media (max-width: 820px) { .top nav { display: none; } }
+@media (max-width: 820px) { .top { flex-wrap: wrap; row-gap: 4px; } .top nav { gap: 14px; font-size: .85rem; flex-wrap: wrap; } .brand span { font-size: .9rem; } }
 
 /* ornamental band: a gold lattice, the one decorative device */
 .band {

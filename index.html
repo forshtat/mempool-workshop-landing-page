@@ -15,17 +15,15 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top">
-  <a class="brand" href="#top" aria-label="Alternative Mempools, top of page">
+  <span class="brand">
     <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M16 3 7 16l9 5.5 9-5.5z" fill="#e8702a"/><path d="M16 23 7 17.6 16 29l9-11.4z" fill="currentColor"/></svg>
-    <span>ERC-8421</span>
-  </a>
-  <nav aria-label="Sections">
-    <a href="#strict">Why strict</a>
-    <a href="#unlock">What changes</a>
-    <a href="#vs4337">ERC-4337</a>
-    <a href="#architecture">Architecture</a>
-    <a href="#sidecar">Sidecar</a>
-    <a href="#build">Build</a>
+    <span>Alternative Mempools for Frame Transactions</span>
+  </span>
+  <nav aria-label="Resources">
+    <a href="https://explorer.altmempool.wtf/">Explorer</a>
+    <a href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">ERC-8421</a>
+    <a href="https://github.com/forshtat/mempool-workshop-sidecar">Reference Implementation</a>
+    <a href="https://github.com/forshtat/mempool-workshop">Tutorial</a>
   </nav>
 </header>
 
@@ -36,7 +34,7 @@
   <div class="hero-title">
     <h1>Alternative mempools for Frame Transactions</h1>
     <p class="lede">EIP-8141's public mempool says no to almost everything that needs real validation logic. ERC-8421 lets nodes say yes, by pricing abuse with stake and reputation instead of banning whole features.</p>
-    <p class="hero-links"><a class="btn" href="#matrix">See what each mempool admits</a><a class="btn ghost" href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">Read the discussion</a></p>
+    <p class="hero-links"><a class="btn" href="https://explorer.altmempool.wtf/">Open the explorer</a><a class="btn ghost" href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800">Read ERC-8421</a></p>
   </div>
 </section>
 
@@ -272,7 +270,7 @@
       <div>
         <p>The mempool sidecar is a TypeScript node for EIP-8141. It exposes <span class="mono">eth_sendFrameTransaction</span>, validates and simulates transactions against an execution client, relays them on-chain, and gossips them to other sidecars over libp2p.</p>
         <p>There is no EntryPoint and no <span class="mono">eth_sendUserOperation</span>. It needs an execution client that implements EIP-8141. Today that is the <span class="mono">eip8141-tracer</span> branch of ethrex.</p>
-        <p class="hero-links"><a class="btn" href="https://altmempoolexplorer.forshtat.com/">Open the live devnet explorer</a><a class="btn ghost dark" href="https://github.com/forshtat/framepool">Source on GitHub</a></p>
+        <p class="hero-links"><a class="btn" href="https://explorer.altmempool.wtf/">Open the explorer</a><a class="btn ghost dark" href="https://github.com/forshtat/mempool-workshop-sidecar">Reference implementation</a></p>
       </div>
       <figure class="report" aria-label="Example admission report">
         <figcaption>Example admission report (illustrative)</figcaption>
@@ -295,12 +293,11 @@
   <div class="wrap">
     <h2>Build with it</h2>
     <ul class="links">
-      <li><a href="https://eips.ethereum.org/EIPS/eip-8421"><strong>ERC-8421</strong><span>The specification</span></a></li>
+      <li><a href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800"><strong>ERC-8421</strong><span>The specification and its discussion</span></a></li>
       <li><a href="https://eips.ethereum.org/EIPS/eip-8141"><strong>EIP-8141</strong><span>Frame Transactions and the canonical mempool</span></a></li>
-      <li><a href="https://ethereum-magicians.org/t/erc-8421-frame-transaction-alternative-mempools/29800"><strong>Ethereum Magicians</strong><span>Join the discussion</span></a></li>
-      <li><a href="https://github.com/forshtat/framepool"><strong>Mempool sidecar</strong><span>Run a node against the devnet</span></a></li>
-      <li><a href="https://altmempoolexplorer.forshtat.com/"><strong>Devnet explorer</strong><span>Live mempool, admissions, peers</span></a></li>
-      <li class="soon"><span><strong>Documentation, starter repository, coding-agent skill</strong><span>Coming soon</span></span></li>
+      <li><a href="https://explorer.altmempool.wtf/"><strong>Explorer</strong><span>Live mempool, admissions, peers</span></a></li>
+      <li><a href="https://github.com/forshtat/mempool-workshop-sidecar"><strong>Reference implementation</strong><span>The mempool sidecar</span></a></li>
+      <li><a href="https://github.com/forshtat/mempool-workshop"><strong>Tutorial</strong><span>Build your own alternative mempool</span></a></li>
     </ul>
   </div>
 </section>
