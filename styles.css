@@ -222,3 +222,48 @@ footer p { padding: 20px max(16px, 3vw); margin: 0; font-size: .92rem; max-width
 .spec th[scope="row"] { padding-top: 12px; width: 100%; overflow-wrap: anywhere; }
 .spec td { padding-bottom: 12px; border-bottom: 1px solid #bfb185; }
 .spec tr:first-child th { border-top: 0; }
+
+/* desk: the panel sits flush under the tab rule, so its border closes the box */
+.panel { margin-top: -14px; border-top: 2px solid var(--ink); }
+.tabs { position: relative; z-index: 1; }
+.tabs button[aria-selected="true"] { background: #fbf5e4; border-bottom-color: var(--crystal); }
+
+/* Mumbai touches: marigold, a torana scallop under the band, jali lattice, menu-card flourishes */
+:root { --marigold: #f2a516; --maroon: #7a1f2b; }
+
+.band { position: relative; margin-bottom: 11px; border-bottom: 0; }
+.band::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 11px;
+  background:
+    radial-gradient(circle at 50% 0, var(--indigo) 0 8px, var(--gold) 8px 10px, transparent 10.5px) 0 0 / 22px 11px repeat-x;
+}
+footer .band { margin-bottom: 0; }
+footer .band::after { display: none; }
+.band { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22' viewBox='0 0 44 22'%3E%3Cpath d='M0 11 11 1l11 10L11 21z M22 11 33 1l11 10-11 10z' fill='none' stroke='%23b8964e' stroke-width='1.2'/%3E%3Ccircle cx='11' cy='11' r='2.4' fill='%23f2a516'/%3E%3Ccircle cx='33' cy='11' r='2.4' fill='%23f2a516'/%3E%3C/svg%3E"); }
+
+.hero-title::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23f2a516' stroke-width='1'%3E%3Ccircle cx='24' cy='0' r='24'/%3E%3Ccircle cx='24' cy='48' r='24'/%3E%3Ccircle cx='0' cy='24' r='24'/%3E%3Ccircle cx='48' cy='24' r='24'/%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-title > * { position: relative; }
+
+/* section headings get a small lotus flourish, like a menu card */
+h2::after {
+  content: ""; display: block; width: 120px; height: 14px; margin-top: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14' viewBox='0 0 120 14'%3E%3Cpath d='M0 7h46M74 7h46' stroke='%23b8964e' stroke-width='1.5'/%3E%3Cpath d='M60 1c3 3 3 9 0 12-3-3-3-9 0-12zM52 4c4 0 7 3 8 9-5 0-8-4-8-9zM68 4c-4 0-7 3-8 9 5 0 8-4 8-9z' fill='%23e8702a'/%3E%3Ccircle cx='48' cy='7' r='1.8' fill='%23f2a516'/%3E%3Ccircle cx='72' cy='7' r='1.8' fill='%23f2a516'/%3E%3C/svg%3E") no-repeat left center;
+}
+.desk-title::after { display: none; }
+
+/* menu-card double rule on the main framed boxes */
+.panel, .report, .prefix, .rep, .tools, .uses { outline: 1px solid var(--gold); outline-offset: 4px; }
+.tools, .uses, .rep { margin-block: 32px 0; }
+.rep { margin-top: 12px; }
+
+/* tables read like a menu: dotted leaders on the comparison rows */
+.cmp tbody th, .cmp tbody td { border-top: 1px dotted #9d8c5c; }
+
+/* arched tabs */
+.tabs button { border-radius: 14px 14px 0 0; }
+.field button { border-color: var(--maroon); color: var(--maroon); }
+.field button[aria-checked="true"] { background: var(--maroon); color: var(--paper); }
+.links a:hover { border-color: var(--marigold); }
