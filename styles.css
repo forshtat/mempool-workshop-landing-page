@@ -343,3 +343,11 @@ h2::after {
 .repfig figcaption { margin-top: 12px; font-size: .95rem; color: #c8c4ee; }
 @media (max-width: 720px) { .states { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .marker { left: 50%; animation: none !important; } .st { opacity: 1; animation: none !important; } .chips span { animation: none !important; } }
+
+/* frame boxes have a fixed width per type, so self_verify and only_verify match in every row */
+.frame { flex: none; width: 124px; }
+.frame.deploy { width: 84px; }
+.frame.pay { width: 70px; }
+.frame.tail { width: 120px; }
+@media (max-width: 640px) { .frames { flex-wrap: wrap; } }
+.frame.tail { flex: none; }
