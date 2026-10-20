@@ -119,12 +119,12 @@
     </div>
 
     <h3>Only four prefix shapes get through</h3>
-    <p class="sub">Each box is a frame. Everything after the prefix is outside mempool validation.</p>
+    <p class="sub">Each box is a frame. The hatched box stands for every frame after the prefix. Those frames are outside mempool validation.</p>
     <div class="prefixes" role="list">
-      <div class="prefix" role="listitem"><h4>Self relay</h4><div class="frames"><span class="frame ">self_verify</span><span class="frame tail">user_op&hellip;</span></div></div>
-      <div class="prefix" role="listitem"><h4>Self relay, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">self_verify</span><span class="frame tail">user_op&hellip;</span></div></div>
-      <div class="prefix" role="listitem"><h4>Canonical paymaster</h4><div class="frames"><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">user_op&hellip;</span></div></div>
-      <div class="prefix" role="listitem"><h4>Canonical paymaster, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">user_op&hellip;</span></div></div>
+      <div class="prefix" role="listitem"><h4>Self relay</h4><div class="frames"><span class="frame ">self_verify</span><span class="frame tail">execution body</span></div></div>
+      <div class="prefix" role="listitem"><h4>Self relay, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">self_verify</span><span class="frame tail">execution body</span></div></div>
+      <div class="prefix" role="listitem"><h4>Canonical paymaster</h4><div class="frames"><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">execution body</span></div></div>
+      <div class="prefix" role="listitem"><h4>Canonical paymaster, new account</h4><div class="frames"><span class="frame deploy">deploy</span><span class="frame ">only_verify</span><span class="frame pay">pay</span><span class="frame tail">execution body</span></div></div>
     </div>
   </div>
 </section>
