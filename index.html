@@ -58,9 +58,9 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Privacy withdrawal<small>Proof check of about 350k gas, shared sender, keyed nonces</small></th>
+            <th scope="row">Privacy withdrawal<small>Proof check of about 200k gas, shared sender, keyed nonces</small></th>
             <td><span class="v limited">Limited</span>100k gas cap is too low for a proof.</td>
-            <td><span class="v plus">Good, with stake</span>A staked sender gets 1M gas and no sender-wide pending cap. <span class="rule">BUDGET-010</span><span class="rule">LIFECYCLE-030</span></td>
+            <td><span class="v plus">Good</span>250k gas per entity fits a minimal proof check without stake. A staked sender gets 2.5M gas and no sender-wide pending cap. <span class="rule">BUDGET-010</span><span class="rule">LIFECYCLE-030</span></td>
             <td><span class="v custom">Custom</span>Set your own gas limit.</td>
           </tr>
           <tr>
@@ -70,9 +70,9 @@
             <td><span class="v custom">Custom</span>Trust a keystore contract you audited.</td>
           </tr>
           <tr>
-            <th scope="row">Post-quantum signature<small>Verified in plain EVM, about 700k gas</small></th>
+            <th scope="row">Post-quantum signature<small>Verified in plain EVM, often 700k gas or more</small></th>
             <td><span class="v no">Rejected</span>Far above the 100k gas cap.</td>
-            <td><span class="v plus">Good, with stake</span>A staked sender gets 1M gas. <span class="rule">BUDGET-010</span></td>
+            <td><span class="v plus">Good, with stake</span>A staked sender gets 2.5M gas, enough for most unoptimized schemes. <span class="rule">BUDGET-010</span></td>
             <td><span class="v custom">Custom</span>Replace hot Solidity with a native binary.</td>
           </tr>
           <tr>
@@ -179,7 +179,7 @@
     <table class="cmp">
       <thead><tr><th scope="col">Limit</th><th scope="col">Canonical (EIP-8141)</th><th scope="col">Standard alternative (ERC-8421)</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Validation gas</th><td>100,000 total</td><td>100,000 per unstaked entity<br>1,000,000 per staked entity <span class="rule">BUDGET-010</span></td></tr>
+        <tr><th scope="row">Validation gas</th><td>100,000 total</td><td>250,000 per unstaked entity<br>2,500,000 per staked entity <span class="rule">BUDGET-010</span></td></tr>
         <tr><th scope="row">State gas</th><td>500,000 cap</td><td>No cap. The payer's solvency check already reserves it. <span class="rule">Rationale</span></td></tr>
         <tr><th scope="row">Writes in the prefix</th><td>Not in the four recognized shapes</td><td>Allowed in <span class="mono">deploy</span> and <span class="mono">pre_verify</span> frames <span class="rule">PREFIX-120</span></td></tr>
         <tr><th scope="row">Storage of other contracts</th><td>Rejected</td><td>Storage associated with the sender is allowed. A staked entity may also read any storage and write slots keyed by its own address. <span class="rule">STORAGE-021, 031-033</span></td></tr>
@@ -197,11 +197,11 @@
   <div class="wrap">
     <h2>What you can build with that freedom</h2>
     <div class="uses">
-      <article><h3>Privacy protocols</h3><p>Some withdrawals need far more than 100k gas to verify. A staked sender can spend up to 1M, and a keyed nonce per user keeps their transactions independent.</p></article>
-      <article><h3>Token paymasters</h3><p>ERC-20 balances and allowances live in arbitrary storage. A <span class="mono">pre_verify</span> frame lets the paymaster collect its tokens before it commits to pay.</p></article>
+      <article><h3>Privacy protocols</h3><p>Some withdrawals need far more than 100k gas to verify. A sender can spend 250k unstaked, or 2.5M with stake, and a keyed nonce per user keeps their transactions independent.</p></article>
+      <article><h3>Stateful paymasters</h3><p>Token paymasters are the best-known case: ERC-20 balances and allowances live in arbitrary storage. More broadly, a paymaster can keep its own state, such as quotas, subscriptions or credits. A <span class="mono">pre_verify</span> frame lets it collect or update that state before it commits to pay.</p></article>
       <article><h3>Keystore contracts</h3><p>Credentials live in storage outside the sender account. Slots associated with the sender are readable.</p></article>
       <article><h3>Quantum cryptography</h3><p>Post-quantum signatures run in plain EVM code, without precompiles. That costs gas well beyond the canonical limit.</p></article>
-      <article><h3>Zero-knowledge proofs</h3><p>Verifying a proof in validation needs a higher budget. Stake buys it.</p></article>
+      <article><h3>Zero-knowledge proofs</h3><p>Verifying a proof in validation needs a higher budget. A minimal check fits the unstaked 250k, and stake buys more.</p></article>
       <article><h3>Rules of your own</h3><p>Trust a contract you audited. Swap hot Solidity for a Rust binary. Track reputation differently. It is your mempool.</p></article>
     </div>
   </div>
@@ -233,8 +233,8 @@
 <!-- ARCHITECTURE -->
 <section class="sect ink" id="architecture">
   <div class="wrap">
-    <h2>Federated mempools, one open submission market</h2>
-    <p class="lead">Nobody in the world has to agree on one set of rules. Nodes opt into the mempools they want to serve.</p>
+    <h2>Modular mempools, one open submission market</h2>
+    <p class="lead">A mempool is an app, not a protocol constant. Nobody has to agree on one set of rules: each mempool bundles its own validation rules, and nodes opt into the ones they want to serve.</p>
     <figure class="arch">
       <svg viewBox="0 0 880 380" role="img" aria-labelledby="archT archD">
         <title id="archT">Mempool architecture</title>
@@ -254,7 +254,7 @@
         <path class="ln dash" d="M740 185H650" marker-end="url(#ar)"/>
         <text x="695" y="176" text-anchor="middle" class="s">RPC</text>
       </svg>
-      <figcaption>Each mempool node is a separate process. Reputation counters are kept per mempool, so an entity throttled in one is unaffected in another.</figcaption>
+      <figcaption>Each mempool node is a separate process. Reputation counters are kept per mempool, so an entity throttled in one is unaffected in another. Because a mempool is a module, new ones can add features the public one lacks, such as proof aggregation or pre-inclusion privacy through mempool encryption. These are possibilities, not part of the sidecar today.</figcaption>
     </figure>
 
     <h3 class="on-ink">Reaching the mempool is only the first step</h3>
@@ -279,7 +279,7 @@
 <span class="ok">pass</span>  SIGNATURE-010 secp256k1 valid
 <span class="ok">pass</span>  STAKING-010  payer staked
 <span class="ok">pass</span>  STORAGE-021  token slot keyed by sender
-<span class="ok">pass</span>  BUDGET-010   81,400 of 1,000,000
+<span class="ok">pass</span>  BUDGET-010   81,400 of 2,500,000
 <span class="ok">pass</span>  SOLVENCY-010 reserved 0.0021 ETH
 <span class="bad">fail</span>  LOCAL-010    payer is another tx's sender
 <span class="dim">→ rejected, no reputation change for peer</span></code></pre>
